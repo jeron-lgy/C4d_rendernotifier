@@ -1,4 +1,5 @@
 # Tongzhi Render Notifier
+**_快速使用可以直接跳转到下文[快速开始](#快速开始)_**
 
 一个面向 `Cinema 4D` 的渲染通知工具。
 
@@ -24,8 +25,8 @@
 
 发布说明见：
 
-- [RELEASE_NOTES.md](/C:/Users/xianka/Documents/codex/tongzhi/RELEASE_NOTES.md)
-- [CHANGELOG.md](/C:/Users/xianka/Documents/codex/tongzhi/CHANGELOG.md)
+- [RELEASE_NOTES.md](RELEASE_NOTES.md)
+- [CHANGELOG.md](CHANGELOG.md)
 
 ## 主要功能
 
@@ -69,11 +70,12 @@
 
 把：
 
-- `c4d_render_notifier/`
+- `c4d_render_notifier`
 
-复制到：
+复制到自己的插件目录：
 
-`Cinema 4D/plugins/`
+- 比如我的就是 `C:\Program Files\Maxon Cinema 4D 2025\plugins\`
+- 当前测试版本是 `2025.3.1`，可以正常运行
 
 插件入口文件是：
 
@@ -96,6 +98,30 @@
 - 自动打开浏览器控制台
 
 ### 3. 配置通知
+
+#### 3.1 关于通知
+
+- 飞书 webhook（推荐指数：⭐⭐⭐⭐⭐）
+
+  配置界面：
+
+  点击创建群组 -> 点击群设置 -> 添加群机器人 -> 添加机器人 -> 自定义机器人 -> 点击添加，这时候就会有链接出现。
+
+  ![飞书机器人创建示意](docs/readme-assets/image-3.png)
+
+  这里选择 `feishu webhook`，直接复制链接到配置界面，保存设置就可以了。
+
+  ![飞书通道配置示意](docs/readme-assets/image-4.png)
+
+- Server酱
+
+  - 免费版有一些限制，喜欢微信通知可以用这个配置，需要轻微折腾
+  - 官网：[https://sct.ftqq.com/](https://sct.ftqq.com/)
+  - 推荐指数：⭐⭐⭐
+
+  同样只需要复制 API Key 就可以收到通知。
+
+  ![Server酱配置示意](docs/readme-assets/image-5.png)
 
 在浏览器控制台中配置：
 
@@ -129,57 +155,6 @@
 
 `%APPDATA%\TongzhiRenderNotifier\tongzhi_render_notifier.json`
 
-## 推荐发布方式
+## 一点感受
 
-推荐使用：
-
-- GitHub 仓库放源码
-- GitHub Releases 放可直接下载的发布包
-
-当前建议对外发布包结构见：
-
-- [DELIVERY_STRUCTURE.md](/C:/Users/xianka/Documents/codex/tongzhi/DELIVERY_STRUCTURE.md)
-- [RELEASE_CHECKLIST.md](/C:/Users/xianka/Documents/codex/tongzhi/RELEASE_CHECKLIST.md)
-
-## 仓库说明
-
-源码仓库里当前推荐关注：
-
-- `c4d_render_notifier/`
-- `watcher/`
-- `README.md`
-- `CHANGELOG.md`
-- `RELEASE_NOTES.md`
-
-这些目录或文件主要用于开发和发布过程，不建议作为最终用户入口：
-
-- `design_preview/`
-- `build/`
-- `dist/`
-- `release/`
-
-## 已知边界
-
-1. 渲染状态采集仍依赖 `C4D Python` 插件
-2. 完成识别虽然已经较稳定，但仍包含兜底推断逻辑
-3. 输出文件判断依赖实际渲染结果落盘
-
-## 开发与打包
-
-如果你要继续开发或重新打包，可参考：
-
-- [watcher/PACKAGE_NOTES.md](/C:/Users/xianka/Documents/codex/tongzhi/watcher/PACKAGE_NOTES.md)
-- [watcher/build_web_console.bat](/C:/Users/xianka/Documents/codex/tongzhi/watcher/build_web_console.bat)
-- [watcher/web_console.spec](/C:/Users/xianka/Documents/codex/tongzhi/watcher/web_console.spec)
-
-## GitHub 发布参考
-
-如果你准备把这个项目发布到 GitHub，可参考：
-
-- [GITHUB_PUBLISH.md](/C:/Users/xianka/Documents/codex/tongzhi/GITHUB_PUBLISH.md)
-- [FIRST_GITHUB_RELEASE.md](/C:/Users/xianka/Documents/codex/tongzhi/FIRST_GITHUB_RELEASE.md)
-
-## 备注
-
-- `c4d_render_notifier/constants.py` 里的插件 ID 当前仍是占位值，正式长期发布前建议替换
-- 当前仓库里保留了一些历史试验入口，用于开发留档
+AI 时代最笨的是人。一个下午慢悠悠就写好了功能，又一个半天套了一个好看的 Web UI，满足了自己码农的小心愿。

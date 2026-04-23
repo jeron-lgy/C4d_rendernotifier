@@ -25,3 +25,7 @@ env/
 
 # Optional local notes
 *.local
+
+# Local README drafts and raw image drafts
+/README_v2.md
+/image*.png
