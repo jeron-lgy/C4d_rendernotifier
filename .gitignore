@@ -1,0 +1,27 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Build outputs
+build/
+dist/
+release/
+design_preview/
+
+# Local runtime data
+*.log
+*.tmp
+
+# OS / editor
+.DS_Store
+Thumbs.db
+
+# Local virtual environments
+.venv/
+venv/
+env/
+
+# Optional local notes
+*.local

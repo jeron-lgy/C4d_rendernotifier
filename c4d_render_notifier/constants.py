@@ -1,0 +1,34 @@
+PLUGIN_ID = 1060123
+PLUGIN_NAME = "Tongzhi Render Notifier"
+PLUGIN_HELP = "Cinema 4D render notifications for Feishu, ServerChan, and other webhook endpoints."
+
+SETTINGS_FILENAME = "tongzhi_render_notifier.json"
+RUNTIME_STATE_FILENAME = "runtime_state.json"
+PLUGIN_LOG_FILENAME = "plugin.log"
+WATCHER_LOG_FILENAME = "watcher.log"
+HISTORY_FILENAME = "notify_history.json"
+
+MESSAGE_PLUGIN_ID = 1060124
+COMMAND_PLUGIN_ID = 1060125
+
+CHANNEL_TYPE_FEISHU = "feishu_webhook"
+CHANNEL_TYPE_SERVERCHAN = "serverchan"
+CHANNEL_TYPE_GENERIC = "generic_webhook"
+
+EVENT_RENDER_COMPLETED = "render_completed"
+EVENT_RENDER_TIMEOUT = "render_timeout"
+EVENT_TEST = "test"
+
+DEFAULT_TIMEOUT_SECONDS = 1800
+MONITOR_INTERVAL_MS = 1000
+HEARTBEAT_INTERVAL_SECONDS = 3
+WATCHER_POLL_INTERVAL_SECONDS = 2
+TASK_STALE_SECONDS = 15
+
+NOTIFICATION_FIELD_EVENT = "event_type"
+NOTIFICATION_FIELD_MACHINE = "machine_name"
+NOTIFICATION_FIELD_PROJECT = "project_name"
+NOTIFICATION_FIELD_TIME = "sent_time"
+NOTIFICATION_FIELD_RENDER_MODE = "render_mode"
+NOTIFICATION_FIELD_OUTPUT_PATH = "output_path"
+NOTIFICATION_FIELD_STARTED_AT = "started_at"

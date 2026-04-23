@@ -1,0 +1,5 @@
+pystray
+pillow
+
+# Optional: package into .exe later
+# pyinstaller

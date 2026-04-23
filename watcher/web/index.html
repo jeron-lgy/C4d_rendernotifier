@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>通知 Watcher 控制台</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">T</div>
+        <div>
+          <p class="eyebrow">Tongzhi</p>
+          <h1>控制台</h1>
+        </div>
+      </div>
+
+      <nav class="nav-list">
+        <button class="nav-item active" data-page="overview">总览</button>
+        <button class="nav-item" data-page="channels">通道设置</button>
+        <button class="nav-item" data-page="history">通知历史</button>
+        <button class="nav-item" data-page="logs">运行日志</button>
+      </nav>
+    </aside>
+
+    <main class="main-layout">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">桌面控制台</p>
+          <h2>实时渲染通知中心</h2>
+          <p class="topbar-status" id="topbarStatus">Watcher 状态读取中</p>
+        </div>
+        <div class="topbar-actions">
+          <button class="ghost-btn" id="testSendBtn">测试发送</button>
+          <button class="ghost-btn" id="tickBtn">执行一轮检测</button>
+          <button class="primary-btn" id="watcherBtn">启动 Watcher</button>
+        </div>
+      </header>
+
+      <section class="page active" id="overview-page">
+        <section class="hero-grid">
+          <div class="hero-panel">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow bright">当前会话</p>
+                <h3 id="heroProject">当前没有渲染任务</h3>
+              </div>
+              <span class="status-pill live" id="heroStatus">空闲</span>
+            </div>
+
+            <div class="hero-metrics">
+              <article><p>机器名称</p><strong id="metricMachine">-</strong></article>
+              <article><p>渲染模式</p><strong id="metricMode">-</strong></article>
+              <article><p>超时阈值</p><strong id="metricTimeout">-</strong></article>
+              <article><p>运行状态</p><strong id="metricRuntime">-</strong></article>
+            </div>
+
+            <div class="signal-list">
+              <div class="signal-row"><span>插件心跳</span><div class="bar"><i id="signalHeartbeat"></i></div></div>
+              <div class="signal-row"><span>Watcher 状态</span><div class="bar"><i id="signalWatcher"></i></div></div>
+              <div class="signal-row"><span>输出同步</span><div class="bar"><i id="signalOutput"></i></div></div>
+            </div>
+          </div>
+
+          <div class="summary-stack">
+            <article class="summary-card soft"><p class="card-label">已启用通道</p><strong id="summaryChannels">0</strong><span id="summaryChannelsNote">-</span></article>
+            <article class="summary-card coral"><p class="card-label">最近一次通知</p><strong id="summaryLastTime">--:--:--</strong><span id="summaryLastNote">暂无通知</span></article>
+            <article class="summary-card dark"><p class="card-label">开机自启</p><strong id="summaryAutostart">关闭</strong><span id="summaryAutostartNote">手动启动</span></article>
+          </div>
+        </section>
+
+        <section class="content-grid">
+          <div class="card section-card">
+            <div class="section-head"><div><p class="eyebrow">状态</p><h3>Watcher 运行状态</h3></div></div>
+            <div class="runtime-list" id="runtimeList"></div>
+          </div>
+
+          <div class="card section-card">
+            <div class="section-head"><div><p class="eyebrow">通道</p><h3>通知路由</h3></div></div>
+            <div class="channel-list" id="channelStatusList"></div>
+          </div>
+        </section>
+
+        <section class="bottom-grid">
+          <div class="card timeline-card">
+            <div class="section-head"><div><p class="eyebrow">事件</p><h3>最近历史</h3></div></div>
+            <div class="timeline" id="timelineList"></div>
+          </div>
+
+          <div class="card logs-card">
+            <div class="section-head"><div><p class="eyebrow">日志</p><h3>实时诊断预览</h3></div></div>
+            <div class="log-debug" id="logDebug"></div>
+            <div class="log-console" id="logConsole"></div>
+          </div>
+        </section>
+      </section>
+
+      <section class="page" id="channels-page">
+        <div class="settings-grid">
+          <div class="card form-card">
+            <p class="eyebrow">基础设置</p>
+            <h3>Watcher 配置</h3>
+            <label>机器名称<input id="machineNameInput" type="text"></label>
+            <label>超时阈值（秒）<input id="timeoutInput" type="number" min="1"></label>
+            <label>轮询间隔（秒）<input id="pollInput" type="number" min="1"></label>
+            <label class="checkbox-row"><input id="autostartInput" type="checkbox">随 Windows 自动启动</label>
+            <button class="primary-btn full" id="saveConfigBtn">保存配置</button>
+          </div>
+
+          <div class="card form-card">
+            <p class="eyebrow">通知通道</p>
+            <h3>通道编辑器</h3>
+            <div class="channel-editor">
+              <div class="channel-list-box" id="channelListBox"></div>
+              <div class="channel-form">
+                <label>通道名称<input id="channelNameInput" type="text"></label>
+                <label>通道类型<select id="channelTypeInput"></select></label>
+                <label>Webhook / SendKey<input id="channelEndpointInput" type="text"></label>
+                <label class="checkbox-row"><input id="channelEnabledInput" type="checkbox">启用此通道</label>
+                <div class="button-row">
+                  <button class="ghost-btn" id="newChannelBtn">新建</button>
+                  <button class="ghost-btn" id="deleteChannelBtn">删除</button>
+                  <button class="primary-btn" id="saveChannelBtn">保存通道</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card form-card notification-card">
+            <p class="eyebrow">通知内容</p>
+            <div class="section-head">
+              <h3>通知信息编排</h3>
+              <span class="dirty-badge" id="notificationDirtyBadge">未保存修改</span>
+            </div>
+            <p class="form-note">可以分别配置渲染完成、超时提醒和测试消息的通知内容。</p>
+
+            <div class="notification-layout">
+              <div class="notification-fields" id="notificationFields"></div>
+
+              <div class="notification-controls">
+                <label>模板类型
+                  <select id="notificationTemplateInput">
+                    <option value="render_completed">渲染完成</option>
+                    <option value="render_timeout">超时提醒</option>
+                    <option value="test">测试消息</option>
+                  </select>
+                </label>
+                <label>字段分隔符
+                  <select id="notificationSeparatorInput">
+                    <option value=" | ">竖线分隔（|）</option>
+                    <option value=" - ">短横线分隔（-）</option>
+                    <option value=" / ">斜杠分隔（/）</option>
+                    <option value=" · ">圆点分隔（·）</option>
+                  </select>
+                </label>
+                <label class="checkbox-row"><input id="notificationShowLabelsInput" type="checkbox">显示字段名</label>
+                <button class="primary-btn" id="notificationSaveBtn">保存通知设置</button>
+                <button class="ghost-btn" id="notificationResetBtn">恢复当前模板默认</button>
+                <div class="notification-preview">
+                  <p class="eyebrow">预览</p>
+                  <div id="notificationPreview">渲染完成 | home | 底座.c4d</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" id="history-page">
+        <div class="card single-pane">
+          <p class="eyebrow">通知记录</p>
+          <h3>历史消息</h3>
+          <div class="records-sheet" id="historyText"></div>
+        </div>
+      </section>
+
+      <section class="page" id="logs-page">
+        <div class="card single-pane">
+          <div class="section-head">
+            <div><p class="eyebrow">诊断</p><h3>运行日志</h3></div>
+            <button class="ghost-btn" id="reloadLogsBtn">刷新日志</button>
+          </div>
+          <div class="records-sheet" id="logsText"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="/app.js"></script>
+</body>
+</html>

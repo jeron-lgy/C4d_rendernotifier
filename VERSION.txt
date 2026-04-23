@@ -1,0 +1,5 @@
+Tongzhi Render Notifier
+Version: v1.0.0
+Release Date: 2026-04-24
+
+This version is the first stable packaged release candidate for personal production use.
