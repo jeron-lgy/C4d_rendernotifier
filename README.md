@@ -1,39 +1,33 @@
 # Tongzhi Render Notifier
 
-这是当前可交付的 `C4D 渲染通知工具` 版本。
+一个面向 `Cinema 4D` 的渲染通知工具。
 
-项目已经收敛为两部分：
+它由两部分组成：
 
 - `c4d_render_notifier/`
-  - `C4D` 插件
-  - 负责检测本机渲染状态并写入运行状态文件
+  - 安装到 `C4D` 的插件
+  - 负责检测渲染状态并写入运行信息
 - `watcher/`
-  - 外部常驻 watcher
-  - 负责读取运行状态、判断完成或超时、发送通知、提供托盘和 Web 控制台
+  - 独立后台 watcher
+  - 负责托盘常驻、读取状态、发送通知、提供 Web 控制台
 
-## 推荐使用方式
+适合解决这类问题：
 
-当前推荐只使用这一套入口：
+- `C4D` 渲染完成后没有提醒
+- 多台机器渲染时，不容易区分是哪台机器完成
+- 希望把渲染完成或超时提醒推送到飞书、Server酱等渠道
 
-1. 把 [c4d_render_notifier](/C:/Users/xianka/Documents/codex/tongzhi/c4d_render_notifier) 整个目录复制到：
-   `Cinema 4D/plugins/`
-2. 启动 [watcher/launch_web_console.bat](/C:/Users/xianka/Documents/codex/tongzhi/watcher/launch_web_console.bat)
-3. 在浏览器控制台里配置机器名称、通知通道和通知内容
+## 当前版本
 
-当前最稳定的控制端是：
+- 版本：`v1.0.0`
+- 发布日期：`2026-04-24`
 
-- [watcher/launch_web_console.bat](/C:/Users/xianka/Documents/codex/tongzhi/watcher/launch_web_console.bat)
-- [watcher/web_console.py](/C:/Users/xianka/Documents/codex/tongzhi/watcher/web_console.py)
-- [watcher/web/index.html](/C:/Users/xianka/Documents/codex/tongzhi/watcher/web/index.html)
+发布说明见：
 
-其他入口目前保留在仓库里，但已经不再是主推荐路径：
+- [RELEASE_NOTES.md](/C:/Users/xianka/Documents/codex/tongzhi/RELEASE_NOTES.md)
+- [CHANGELOG.md](/C:/Users/xianka/Documents/codex/tongzhi/CHANGELOG.md)
 
-- `launch_watcher.bat`
-- `launch_watcher_ui.bat`
-- `launch_watcher_qt.bat`
-- `design_preview/`
-
-## 当前功能
+## 主要功能
 
 - `C4D` 手动渲染完成通知
 - `C4D` 渲染队列完成通知
@@ -43,7 +37,9 @@
 - 通用 `Webhook`
 - 托盘常驻
 - 开机自启
-- Web 控制台
+- 静默启动，无黑框
+- 浏览器 Web 控制台
+- 中文界面
 - 通知模板配置
   - 渲染完成
   - 超时提醒
@@ -57,9 +53,62 @@
   - 输出路径
   - 开始时间
 
-## 数据目录
+## 推荐使用方式
 
-所有共享数据都写在：
+当前推荐只使用这一套正式入口：
+
+1. 把 `c4d_render_notifier/` 整个目录复制到：
+   `Cinema 4D/plugins/`
+2. 运行 `TongzhiWatcher.exe`
+3. 浏览器打开控制台后，完成机器名称、通知通道和通知模板配置
+4. 先执行一次测试发送，再进行真实渲染验证
+
+## 快速开始
+
+### 1. 安装 C4D 插件
+
+把：
+
+- `c4d_render_notifier/`
+
+复制到：
+
+`Cinema 4D/plugins/`
+
+插件入口文件是：
+
+- `c4d_render_notifier/c4d_render_notifier.pyp`
+
+### 2. 启动 watcher
+
+开发环境可运行：
+
+- `watcher/launch_web_console.bat`
+
+发布版可直接运行：
+
+- `watcher/TongzhiWatcher.exe`
+
+启动后它会：
+
+- 静默运行后台 watcher
+- 启动托盘图标
+- 自动打开浏览器控制台
+
+### 3. 配置通知
+
+在浏览器控制台中配置：
+
+- 机器名称
+- 超时阈值
+- 通知通道
+- 开机启动
+- 通知模板
+- 通知字段顺序和内容
+
+## 配置文件位置
+
+程序默认读取：
 
 `%APPDATA%\TongzhiRenderNotifier\`
 
@@ -76,99 +125,61 @@
 - `notify_history.json`
   - 通知历史
 
-## 安装步骤
+如果要迁移到另一台电脑，请重点复制：
 
-### 1. 安装 C4D 插件
+`%APPDATA%\TongzhiRenderNotifier\tongzhi_render_notifier.json`
 
-复制：
+## 推荐发布方式
 
-- [c4d_render_notifier](/C:/Users/xianka/Documents/codex/tongzhi/c4d_render_notifier)
+推荐使用：
 
-到：
+- GitHub 仓库放源码
+- GitHub Releases 放可直接下载的发布包
 
-`Cinema 4D/plugins/`
+当前建议对外发布包结构见：
 
-插件入口文件：
+- [DELIVERY_STRUCTURE.md](/C:/Users/xianka/Documents/codex/tongzhi/DELIVERY_STRUCTURE.md)
+- [RELEASE_CHECKLIST.md](/C:/Users/xianka/Documents/codex/tongzhi/RELEASE_CHECKLIST.md)
 
-- [c4d_render_notifier.pyp](/C:/Users/xianka/Documents/codex/tongzhi/c4d_render_notifier/c4d_render_notifier.pyp)
+## 仓库说明
 
-### 2. 启动 watcher
+源码仓库里当前推荐关注：
 
-运行：
+- `c4d_render_notifier/`
+- `watcher/`
+- `README.md`
+- `CHANGELOG.md`
+- `RELEASE_NOTES.md`
 
-- [watcher/launch_web_console.bat](/C:/Users/xianka/Documents/codex/tongzhi/watcher/launch_web_console.bat)
+这些目录或文件主要用于开发和发布过程，不建议作为最终用户入口：
 
-它会做这些事：
+- `design_preview/`
+- `build/`
+- `dist/`
+- `release/`
 
-- 静默启动后台 watcher
-- 启动本地 Web 控制台服务
-- 自动打开浏览器
-- 启动托盘图标
+## 已知边界
 
-### 3. 配置通知
+1. 渲染状态采集仍依赖 `C4D Python` 插件
+2. 完成识别虽然已经较稳定，但仍包含兜底推断逻辑
+3. 输出文件判断依赖实际渲染结果落盘
 
-在浏览器控制台里完成：
+## 开发与打包
 
-- 机器名称
-- 超时阈值
-- 通知通道
-- 开机启动
-- 通知内容模板
+如果你要继续开发或重新打包，可参考：
 
-## 依赖
-
-当前 Web 控制台 / 托盘方案建议具备这些 Python 包：
-
-- `pystray`
-- `pillow`
-
-如果你后面要做打包，建议参考：
-
-- [watcher/requirements-web-console.txt](/C:/Users/xianka/Documents/codex/tongzhi/watcher/requirements-web-console.txt)
 - [watcher/PACKAGE_NOTES.md](/C:/Users/xianka/Documents/codex/tongzhi/watcher/PACKAGE_NOTES.md)
-
-## 当前边界
-
-这版已经适合个人长期使用，但仍然有这些边界：
-
-1. 渲染开始识别仍然来自 `C4D Python` 插件
-2. 完成识别虽然已经比早期版本稳定很多，但仍然带有工程上的兜底推断逻辑
-3. 输出文件兜底判断依赖实际渲染结果落盘
-
-## 交付建议
-
-如果你准备把这版交给别人用，建议交付时只保留这两部分：
-
-1. `c4d_render_notifier/`
-2. `watcher/`
-
-并明确说明：
-
-- 正式启动入口是 `watcher/launch_web_console.bat`
-- 不建议使用旧的桌面 UI / Qt UI / 设计稿目录
-
-## 打包准备
-
-仓库里已经补了 watcher 的打包入口：
-
 - [watcher/build_web_console.bat](/C:/Users/xianka/Documents/codex/tongzhi/watcher/build_web_console.bat)
 - [watcher/web_console.spec](/C:/Users/xianka/Documents/codex/tongzhi/watcher/web_console.spec)
-- [watcher/requirements-web-console.txt](/C:/Users/xianka/Documents/codex/tongzhi/watcher/requirements-web-console.txt)
 
-建议最终打包目标：
+## GitHub 发布参考
 
-- `TongzhiWatcher.exe`
+如果你准备把这个项目发布到 GitHub，可参考：
 
-它对应的是：
-
-- [watcher/web_console.pyw](/C:/Users/xianka/Documents/codex/tongzhi/watcher/web_console.pyw)
-
-额外说明见：
-
-- [watcher/PACKAGE_NOTES.md](/C:/Users/xianka/Documents/codex/tongzhi/watcher/PACKAGE_NOTES.md)
-- [DELIVERY_STRUCTURE.md](/C:/Users/xianka/Documents/codex/tongzhi/DELIVERY_STRUCTURE.md)
+- [GITHUB_PUBLISH.md](/C:/Users/xianka/Documents/codex/tongzhi/GITHUB_PUBLISH.md)
+- [FIRST_GITHUB_RELEASE.md](/C:/Users/xianka/Documents/codex/tongzhi/FIRST_GITHUB_RELEASE.md)
 
 ## 备注
 
-- [c4d_render_notifier/constants.py](/C:/Users/xianka/Documents/codex/tongzhi/c4d_render_notifier/constants.py) 里的插件 ID 仍然是占位值，正式发布前建议替换
-- 当前仓库里保留了一些历史试验入口，用于开发留档，不建议作为最终交付入口
+- `c4d_render_notifier/constants.py` 里的插件 ID 当前仍是占位值，正式长期发布前建议替换
+- 当前仓库里保留了一些历史试验入口，用于开发留档
