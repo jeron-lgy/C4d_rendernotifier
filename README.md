@@ -30,9 +30,11 @@
 - `C4D` 渲染队列完成通知
 
 ## 快速开始
-[![点击观看视频 - 演示效果](https://i0.hdslb.com/bfs/archive/xxx.jpg)](https://www.bilibili.com/video/BV1RNRKB1ES1)
+我们制作了一个详细的视频教程，手把手教您如何完成所有部署步骤。如果您偏爱视频指导，请点击下方链接观看：
 
-*点击图片跳转B站观看完整视频*
+[<img src="https://i0.hdslb.com/bfs/archive/6867ea1217d38bca29722d256fca88f0732bbe0c.jpg" alt="点击观看视频教程" width="480">](https://www.bilibili.com/video/BV1RNRKB1ES1)
+
+*点击图片跳转B站观看[完整视频](https://www.bilibili.com/video/BV1RNRKB1ES1/)*
 
 ### 1. 安装 C4D 插件
 
