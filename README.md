@@ -1,5 +1,6 @@
 # Tongzhi Render Notifier
 **_快速使用可以直接跳转到下文[快速开始](#快速开始)_**
+# 简介
 
 一个面向 `Cinema 4D` 的渲染通知工具。
 
@@ -18,11 +19,6 @@
 - 多台机器渲染时，不容易区分是哪台机器完成
 - 希望把渲染完成或超时提醒推送到飞书、Server酱等渠道
 
-## 当前版本
-
-- 版本：`v1.0.0`
-- 发布日期：`2026-04-24`
-
 发布说明见：
 
 - [RELEASE_NOTES.md](RELEASE_NOTES.md)
@@ -32,64 +28,28 @@
 
 - `C4D` 手动渲染完成通知
 - `C4D` 渲染队列完成通知
-- 超时提醒
-- 飞书 `Webhook`
-- `Server酱`
-- 通用 `Webhook`
-- 托盘常驻
-- 开机自启
-- 静默启动，无黑框
-- 浏览器 Web 控制台
-- 中文界面
-- 通知模板配置
-  - 渲染完成
-  - 超时提醒
-  - 测试消息
-- 通知字段编排
-  - 状态
-  - 机器
-  - 工程
-  - 时间
-  - 渲染模式
-  - 输出路径
-  - 开始时间
-
-## 推荐使用方式
-
-当前推荐只使用这一套正式入口：
-
-1. 把 `c4d_render_notifier/` 整个目录复制到：
-   `Cinema 4D/plugins/`
-2. 运行 `TongzhiWatcher.exe`
-3. 浏览器打开控制台后，完成机器名称、通知通道和通知模板配置
-4. 先执行一次测试发送，再进行真实渲染验证
 
 ## 快速开始
+[![点击观看视频 - 演示效果](https://i0.hdslb.com/bfs/archive/xxx.jpg)](https://www.bilibili.com/video/BV1RNRKB1ES1)
+
+*点击图片跳转B站观看完整视频*
 
 ### 1. 安装 C4D 插件
 
 把：
 
-- `c4d_render_notifier`
+- `Tongzhi-Render-Notifier`
 
 复制到自己的插件目录：
 
 - 比如我的就是 `C:\Program Files\Maxon Cinema 4D 2025\plugins\`
 - 当前测试版本是 `2025.3.1`，可以正常运行
 
-插件入口文件是：
-
-- `c4d_render_notifier/c4d_render_notifier.pyp`
-
 ### 2. 启动 watcher
-
-开发环境可运行：
-
-- `watcher/launch_web_console.bat`
 
 发布版可直接运行：
 
-- `watcher/TongzhiWatcher.exe`
+- `C:\Program Files\Maxon Cinema 4D 2025\plugins\Tongzhi-Render-Notifier\watcher\TongzhiWatcher.exe`
 
 启动后它会：
 
@@ -113,7 +73,7 @@
 
   ![飞书通道配置示意](docs/readme-assets/image-4.png)
 
-- Server酱
+- [Server酱](https://sct.ftqq.com/)
 
   - 免费版有一些限制，喜欢微信通知可以用这个配置，需要轻微折腾
   - 官网：[https://sct.ftqq.com/](https://sct.ftqq.com/)
@@ -121,16 +81,6 @@
 
   同样只需要复制 API Key 就可以收到通知。
 
-  ![Server酱配置示意](docs/readme-assets/image-5.png)
-
-在浏览器控制台中配置：
-
-- 机器名称
-- 超时阈值
-- 通知通道
-- 开机启动
-- 通知模板
-- 通知字段顺序和内容
 
 ## 配置文件位置
 
